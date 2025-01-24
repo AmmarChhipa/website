@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Landing Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Navigation Styles */
+        .navbar-brand {
+            font-weight: bold;
+            color: #d35400 !important;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: white !important;
+            transition: color 0.3s ease, transform 0.2s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-link:hover {
+            color: #d35400 !important;
+        }
+
+        .nav-link::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #d35400;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        /* Hero Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            margin-top: 70px;
+        }
+
+        .hero {
+            background-image: url("restaurant-bg-image-asset.jpeg");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            position: relative;
+            display: flex; /* Ensure flexbox is used */
+            flex-direction: column;
+            justify-content: center; /* Vertically center content */
+            align-items: center; /* Horizontally center content */
+            text-align: center; /* Center text within elements */
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px #000000;
+            animation: fadeInDown 1s ease-in-out; /* Animation kept */
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px #000000;
+            animation: fadeInUp 1s ease-in-out; /* Animation kept */
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-primary {
+            background-color: #d35400;
+            border-color: #d35400;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #b03a00;
+            border-color: #b03a00;
+            transform: scale(1.05);
+        }
+
+        /* About Us Section Styles */
+        .about-section {
+            padding: 4rem 0;
+            background-color: #f8f8f8;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            margin: 3rem 0;
+            font-size: 2.5rem;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .about-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .about-img:hover {
+            transform: scale(1.03);
+        }
+
+        .about-text {
+            text-align: justify;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 1.1rem;
+        }
+
+        /* Menu Preview Section Styles */
+        .menu-section {
+            padding: 1rem 0;
+            background-color: #f2f2f2;
+            margin: 3rem 0;
+        }
+
+        .menu-section h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-top: 5rem;
+        }
+
+        .dish {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding-bottom: 20px;
+        }
+        .dish::-webkit-scrollbar{
+            height: 10px;
+        }
+        .dish::-webkit-scrollbar-track{
+            background-color: #f1f1f1;
+        }
+        .dish::-webkit-scrollbar-thumb{
+            background-color: #888;
+            border-radius: 5px;
+        }
+
+        .card {
+            border: none; /* Remove default border */
+            perspective: 1000px;
+            width: 200px; /* Adjust width as needed */
+            height: 350px; /* Adjust height as needed */
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            cursor: pointer;
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Hide content that overflows rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            background-color: transparent;
+            position: relative;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .front {
+            background-color: transparent; /* Make background transparent */
+            color: white;
+            z-index: 2;
+        }
+        .front h3{
+            position: absolute;
+            bottom: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            padding: 10px;
+        }
+
+        .back {
+            background-color: #333;
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content:center; /* Distribute content vertically */
+            align-items: center;
+            padding: 20px;
+        }
+
+        .price-tag {
+            position: absolute; /* Position at the bottom */
+            bottom: 10px; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            z-index: 3;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%; /* Image fills the card */
+            object-fit: cover;
+            border-radius: inherit; /* Match card's border radius */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background-color: transparent;
+        }
+
+        .card h3, .card p {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+            margin: 0;
+            text-align: center;
+            z-index: 2; /* Bring text above the image */
+        }
+        .card p{
+            font-size: 0.8rem;
+        }
+        /* Responsive Navbar Positioning */
+        .navbar-toggler {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            border: none;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .contact-section {
+            padding: 4rem 0;
+            background-color: #333; /* Darker background for contrast */
+            color: white;
+        }
+
+        .contact-section .section-title {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #222; /* Even darker background */
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">Fusion Feast</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#menu">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#menu">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Exquisite Dining Experience</h1>
+            <p>Savor the flavors of culinary artistry in an elegant setting.</p>
+            <a href="#menu" class="btn btn-primary btn-lg">View Menu</a>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="Restaurant_about_us.png" alt="About Us Image"
+                        class="about-img">
+                </div>
+                <div class="col-md-6">
+                    <p class="about-text">Welcome to Fusion Feast, where culinary passion meets elegant ambiance.
+                        Our journey began with a simple desire: to create a dining experience that delights all the
+                        senses. We believe in using the freshest, locally sourced ingredients to craft dishes that are
+                        both innovative and comforting. Our team of talented chefs brings years of experience and a deep
+                        love for food to every plate. We are committed to providing exceptional service and creating a
+                        warm and inviting atmosphere where you can relax and enjoy a memorable dining experience.</p>
+                    <p class="about-text">From intimate dinners to special celebrations, we strive to make every
+                        occasion unforgettable. Our menu features a diverse selection of dishes inspired by both classic
+                        and contemporary cuisine, ensuring there's something to please every palate. We invite you to
+                        join us and discover the art of fine dining at Fusion Feast.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+        <div class="container">
+            <h1>Appetizers</h1>
+            <ul class="dish">
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Bruschetta</h3>
+                            <img src="starter1.jpg" alt="Bruschetta">
+                        </div>
+                        <div class="back">
+                            <h3>Bruschetta</h3>
+                            <p>Italian starter made with grilled bread topped with tomatoes, garlic, and olive oil.</p>
+                            <div class="price-tag">Rs. 250</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Fried Prawns</h3>
+                            <img src="starter2.jpg" alt="Fried Prawns">
+                        </div>
+                        <div class="back">
+                            <h3>Fried Prawns</h3>
+                            <p>Juicy prawns marinated in herbs and grilled to smoky perfection, served with lemon garlic butter.</p>
+                            <div class="price-tag">Rs. 400</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Spring Roll</h3>
+                            <img src="starter3.jpg" alt="Spring Roll">
+                        </div>
+                        <div class="back">
+                            <h3>Spring Roll</h3>
+                            <p>Crispy rolls filled with veggies and noodles, served with sweet and spicy dipping sauce.</p>
+                            <div class="price-tag">Rs. 200</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Nachos</h3>
+                            <img src="starter4.jpg" alt="Nachos">
+                        </div>
+                        <div class="back">
+                            <h3>Nachos</h3>
+                            <p>Crunchy tortilla chips topped with melted cheese and jalapeños, served with salsa and guacamole.</p>
+                            <div class="price-tag">Rs. 150</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Chicken Satay</h3>
+                            <img src="starter5.jpg" alt="Chicken Satay">
+                        </div>
+                        <div class="back">
+                            <h3>Chicken Satay</h3>
+                            <p>Marinated chicken skewers grilled and served with rich peanut sauce.</p>
+                            <div class="price-tag">Rs. 300</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Cheese Quesadilla</h3>
+                            <img src="starter6.jpg" alt="Cheese Quesadilla">
+                        </div>
+                        <div class="back">
+                            <h3>Cheese Quesadilla</h3>
+                            <p>Grilled tortilla filled with melted cheese, served with salsa, guacamole, and sour cream.</p>
+                            <div class="price-tag">Rs. 300</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <h1>Main Course</h1>
+            <ul class="dish">
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Veg Pad Thai</h3>
+                            <img src="main_course1.jpg" alt="Bruschetta">
+                        </div>
+                        <div class="back">
+                            <h3>Veg Pad Thai</h3>
+                            <p>A flavorful stir-fried rice noodle dish with tofu, colorful vegetables, crunchy peanuts, and a tangy Pad Thai sauce.</p>
+                            <div class="price-tag">Rs. 300</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Margherita Pizza</h3>
+                            <img src="main_course2.webp" alt="Fried Prawns">
+                        </div>
+                        <div class="back">
+                            <h3>Margherita Pizza</h3>
+                            <p>A classic Neapolitan pizza with a thin, crispy crust topped with fresh tomato sauce, mozzarella cheese, basil leaves, and a drizzle of olive oil.</p>
+                            <div class="price-tag">Rs. 400</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Chole Bhature</h3>
+                            <img src="main_course3.jpg" alt="Spring Roll">
+                        </div>
+                        <div class="back">
+                            <h3>Chole Bhature</h3>
+                            <p>Chole Bhature is a flavorful and satisfying dish. The chole are spicy and flavorful, and the bhature are soft and fluffy. The combination of the two is a perfect balance of flavors and textures.</p>
+                            <div class="price-tag">Rs. 200</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Carbonara</h3>
+                            <img src="main_course4.jpg" alt="Nachos">
+                        </div>
+                        <div class="back">
+                            <h3>Carbonara</h3>
+                            <p>A classic Italian pasta dish with creamy sauce made from egg yolks, Parmesan cheese, and pancetta (or guanciale)</p>
+                            <div class="price-tag">Rs. 350</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Chicken Tikka Masala</h3>
+                            <img src="main_course5.jpg" alt="Chicken Satay">
+                        </div>
+                        <div class="back">
+                            <h3>Chicken Tikka Masala</h3>
+                            <p>A tantalizing Indian dish featuring marinated, grilled chicken simmered in a creamy tomato sauce infused with aromatic spices.</p>
+                            <div class="price-tag">Rs. 300</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="card-inner">
+                        <div class="front">
+                            <h3>Lamb Rogan Josh</h3>
+                            <img src="main_course6.jpg" alt="Cheese Quesadilla">
+                        </div>
+                        <div class="back">
+                            <h3>Lamb Rogan Josh</h3>
+                            <p>An Indian dish of lamb cooked in a rich, spicy curry sauce made with tomatoes, onions, ginger, garlic, and a blend of warm spices.</p>
+                            <div class="price-tag">Rs. 400</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Ahmedabad, Gujarat</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 1234567890</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@fusionfeast.com</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fa-brands fa-instagram"></i>
+                        <span>fusionfeast</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fa-brands fa-facebook"></i>
+                        <span>Fusion Feast</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Your Name">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Fusion Feast. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
